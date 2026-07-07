@@ -1,8 +1,12 @@
 import React from 'react'
+import AppRouters from './routes/AppRouters'
+import { BrowserRouter } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div>App</div>
+    <BrowserRouter>
+      <AppRouters />
+    </BrowserRouter>
   )
 }
 
