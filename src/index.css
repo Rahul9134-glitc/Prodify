@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+
+.fc {
+  color: white;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th,
+.fc-theme-standard .fc-scrollgrid {
+  border-color: #334155;
+}
+
+.fc-toolbar-title {
+  color: white;
+  font-size: 22px !important;
+  font-weight: bold;
+}
+
+.fc-button {
+  background: #2563eb !important;
+  border: none !important;
+}
+
+.fc-button:hover {
+  background: #1d4ed8 !important;
+}
+
+.fc-col-header-cell {
+  background: #0f172a;
+  color: white;
+}
+
+.fc-daygrid-day {
+  background: #1e293b;
+}
+
+.fc-daygrid-day-number {
+  color: white;
+}
+
+.fc-day-today {
+  background: rgba(37, 99, 235, 0.15) !important;
+}
+
+.fc-event {
+  border: none;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}

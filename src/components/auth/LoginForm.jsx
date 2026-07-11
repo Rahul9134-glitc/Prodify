@@ -3,9 +3,13 @@ import { useForm } from "react-hook-form";
 import { loginSchema } from "../../schema/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { loginUser } from "../../services/authServices";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -17,12 +21,19 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  console.log(watch("remember"));
 
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    reset();
+
+    const result = loginUser(data.email, data.password);
+
+    if (result.success) {
+      toast.success(result.message);
+      reset();
+      navigate("/welcome");
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (

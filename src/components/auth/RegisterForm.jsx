@@ -4,11 +4,15 @@ import { registerSchema } from "../../schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { registerUser } from "../../services/authServices";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -21,9 +25,18 @@ const RegisterForm = () => {
 
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    reset();
+
+    const result = registerUser(data);
+
+    if (result.success) {
+      toast.success(result.message);
+      reset();
+      navigate("/");
+    } else {
+      toast.error(result.message);
+    }
   };
+
 
   return (
     <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.02] p-8 md:p-10 shadow-2xl backdrop-blur-xl">
@@ -39,7 +52,9 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
         {/* Name Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-300">Name</label>
+          <label className="mb-2 block text-sm font-medium text-slate-300">
+            Name
+          </label>
           <div className="flex items-center rounded-xl border border-slate-800 bg-slate-950/50 px-4 focus-within:border-blue-500 transition-colors">
             <FiUser className="text-xl text-slate-500" />
             <input
@@ -56,7 +71,9 @@ const RegisterForm = () => {
 
         {/* Email Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-300">Email</label>
+          <label className="mb-2 block text-sm font-medium text-slate-300">
+            Email
+          </label>
           <div className="flex items-center rounded-xl border border-slate-800 bg-slate-950/50 px-4 focus-within:border-blue-500 transition-colors">
             <FiMail className="text-xl text-slate-500" />
             <input
@@ -67,13 +84,17 @@ const RegisterForm = () => {
             />
           </div>
           {errors.email && (
-            <p className="mt-1.5 text-xs text-red-400">{errors.email.message}</p>
+            <p className="mt-1.5 text-xs text-red-400">
+              {errors.email.message}
+            </p>
           )}
         </div>
 
         {/* Password Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-300">Password</label>
+          <label className="mb-2 block text-sm font-medium text-slate-300">
+            Password
+          </label>
           <div className="flex items-center rounded-xl border border-slate-800 bg-slate-950/50 px-4 focus-within:border-blue-500 transition-colors">
             <FiLock className="text-xl text-slate-500" />
             <input
@@ -91,7 +112,9 @@ const RegisterForm = () => {
             </button>
           </div>
           {errors.password && (
-            <p className="mt-1.5 text-xs text-red-400">{errors.password.message}</p>
+            <p className="mt-1.5 text-xs text-red-400">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -113,7 +136,11 @@ const RegisterForm = () => {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="text-slate-500 hover:text-white transition"
             >
-              {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              {showConfirmPassword ? (
+                <FiEyeOff size={18} />
+              ) : (
+                <FiEye size={18} />
+              )}
             </button>
           </div>
           {errors.confirmPassword && (
@@ -136,7 +163,10 @@ const RegisterForm = () => {
 
           <div className="text-slate-400">
             Already have an account?{" "}
-            <Link to={"/"} className="text-blue-400 font-medium hover:underline focus:outline-none">
+            <Link
+              to={"/"}
+              className="text-blue-400 font-medium hover:underline focus:outline-none"
+            >
               Login
             </Link>
           </div>
