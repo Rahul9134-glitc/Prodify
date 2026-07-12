@@ -10,9 +10,11 @@ import {
   FiHelpCircle,
 } from "react-icons/fi";
 
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+import { NavLink } from "react-router-dom";
 const Sidebar = () => {
+  const navigate = useNavigate();
   const menuItems = [
     {
       title: "Dashboard",
@@ -96,16 +98,14 @@ const Sidebar = () => {
             Check our documentation for more information.
           </p>
 
-          <button className="mt-5 w-full rounded-xl bg-blue-600 py-2 text-white transition hover:bg-blue-700">
-            Documentation
+          <button
+          onClick={() => navigate("/help")}
+          className="mt-5 w-full rounded-xl bg-blue-600 py-2 text-white transition hover:bg-blue-700"
+          >
+           Open Help Center
+          
           </button>
         </div>
-
-        {/* Logout */}
-        <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-red-500 py-3 text-red-400 transition hover:bg-red-500 hover:text-white">
-          <FiLogOut />
-          Logout
-        </button>
       </div>
     </aside>
   );

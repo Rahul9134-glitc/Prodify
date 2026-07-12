@@ -94,5 +94,14 @@ const changePassword = (
   };
 };
 
+const logoutUser = () => {
+  localStorage.removeItem("currentUser");
 
-export { loginUser, registerUser, changePassword };
+  return {
+    success: true,
+    message: "Logged out successfully",
+  };
+};
+
+
+export { loginUser, registerUser, changePassword , logoutUser };
