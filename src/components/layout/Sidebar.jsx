@@ -10,11 +10,14 @@ import {
   FiHelpCircle,
 } from "react-icons/fi";
 
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logoutUser } from "../../services/authServices";
+import { toast } from "react-toastify";
+import WeatherCard from "./Weathercard";
 
-import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   const navigate = useNavigate();
+
   const menuItems = [
     {
       title: "Dashboard",
@@ -48,18 +51,41 @@ const Sidebar = () => {
     },
   ];
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm(
+      "Are you sure you want to logout?"
+    );
+
+    if (!confirmLogout) return;
+
+    const result = logoutUser();
+
+    if (result.success) {
+      toast.success(result.message);
+      navigate("/");
+    }
+  };
+
   return (
-    <aside className="flex h-screen w-72 flex-col justify-between border-r border-slate-700 bg-[#0F172A] p-5">
-      {/* Logo */}
-      <div>
-        <div className="mb-10 flex items-center gap-3">
+    <aside className="flex h-screen w-72 flex-col border-r border-slate-700 bg-[#0F172A]">
+
+      {/* Scroll Area */}
+      <div className="flex-1 overflow-y-auto px-5 py-5">
+
+        {/* Logo */}
+        <div className="mb-8 flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-xl font-bold text-white">
             P
           </div>
 
           <div>
-            <h1 className="text-xl font-bold text-white">PRODIFY</h1>
-            <p className="text-sm text-gray-400">Productivity App</p>
+            <h1 className="text-xl font-bold text-white">
+              PRODIFY
+            </h1>
+
+            <p className="text-sm text-gray-400">
+              Productivity App
+            </p>
           </div>
         </div>
 
@@ -72,7 +98,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-xl px-4 py-3 transition ${
                   isActive
-                    ? "bg-blue-600 text-white"
+                    ? "bg-blue-600 text-white shadow-lg"
                     : "text-gray-400 hover:bg-slate-800 hover:text-white"
                 }`
               }
@@ -82,31 +108,47 @@ const Sidebar = () => {
             </NavLink>
           ))}
         </nav>
-      </div>
 
-      {/* Bottom */}
-      <div>
+        {/* Weather */}
+        <div className="mt-8">
+          <WeatherCard />
+        </div>
+
         {/* Help Card */}
-        <div className="rounded-2xl bg-slate-800 p-5">
+        <div className="mt-6 rounded-2xl bg-slate-800 p-5">
           <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white">
             <FiHelpCircle />
           </div>
 
-          <h3 className="font-semibold text-white">Need Help?</h3>
+          <h3 className="font-semibold text-white">
+            Need Help?
+          </h3>
 
           <p className="mt-2 text-sm text-gray-400">
-            Check our documentation for more information.
+            FAQs, documentation and support are available here.
           </p>
 
           <button
-          onClick={() => navigate("/help")}
-          className="mt-5 w-full rounded-xl bg-blue-600 py-2 text-white transition hover:bg-blue-700"
+            onClick={() => navigate("/help")}
+            className="mt-5 w-full rounded-xl bg-blue-600 py-2 text-white transition hover:bg-blue-700"
           >
-           Open Help Center
-          
+            Open Help Center
           </button>
         </div>
+
       </div>
+
+      {/* Logout */}
+      <div className="border-t border-slate-700 p-5">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500 py-3 text-red-400 transition hover:bg-red-500 hover:text-white"
+        >
+          <FiLogOut />
+          Logout
+        </button>
+      </div>
+
     </aside>
   );
 };

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
 const WelcomeCard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  const [user, setUser] = useState(() =>
+    JSON.parse(localStorage.getItem("currentUser"))
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -13,7 +15,18 @@ const WelcomeCard = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Greeting
+  useEffect(() => {
+    const updateUser = () => {
+      setUser(JSON.parse(localStorage.getItem("currentUser")));
+    };
+
+    window.addEventListener("userUpdated", updateUser);
+
+    return () => {
+      window.removeEventListener("userUpdated", updateUser);
+    };
+  }, []);
+
   const hour = currentTime.getHours();
 
   let greeting = "";
@@ -28,7 +41,6 @@ const WelcomeCard = () => {
     greeting = "🌙 Good Night";
   }
 
-  // Date
   const date = currentTime.toLocaleDateString("en-IN", {
     weekday: "long",
     day: "numeric",
@@ -36,7 +48,6 @@ const WelcomeCard = () => {
     year: "numeric",
   });
 
-  // Time
   const time = currentTime.toLocaleTimeString("en-IN", {
     hour: "2-digit",
     minute: "2-digit",
@@ -44,35 +55,48 @@ const WelcomeCard = () => {
   });
 
   return (
-    <div className="rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 p-8 shadow-xl">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-        {/* Left */}
-        <div>
-          <h3 className="text-lg font-medium text-blue-100">
-            {greeting}
-          </h3>
+    <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 p-6 shadow-2xl transition-all duration-300 hover:scale-[1.01] md:p-8">
 
-          <h2 className="mt-2 text-4xl font-bold text-white">
-            {currentUser?.name}
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+
+        {/* Left */}
+        <div className="flex-1">
+
+          <span className="inline-flex rounded-full bg-white/20 px-4 py-1 text-sm font-medium text-white backdrop-blur-md">
+            {greeting}
+          </span>
+
+          <h2 className="mt-5 text-3xl font-bold text-white md:text-5xl">
+            Welcome,
+            <span className="ml-2 text-yellow-300">
+              {user?.name || "Guest"} 👋
+            </span>
           </h2>
 
-          <p className="mt-4 max-w-lg text-blue-100">
-            Stay productive, complete your goals and make today
-            count. Every small task completed brings you closer
-            to success.
+          <p className="mt-5 max-w-xl text-sm leading-7 text-blue-100 md:text-base">
+            Stay productive and accomplish your goals today.
+            Every completed task is one step closer to success.
+            Keep pushing forward and make every moment count.
           </p>
+
         </div>
 
         {/* Right */}
-        <div className="rounded-2xl bg-white/10 px-8 py-6 text-center backdrop-blur-md">
-          <h1 className="text-4xl font-bold tracking-wider text-white">
+
+        <div className="rounded-3xl border border-white/20 bg-white/10 px-8 py-6 text-center shadow-lg backdrop-blur-xl">
+
+          <h1 className="text-3xl font-bold tracking-wider text-white md:text-5xl">
             {time}
           </h1>
 
-          <p className="mt-3 text-blue-100">
+          <div className="my-4 h-px bg-white/20"></div>
+
+          <p className="text-sm text-blue-100 md:text-base">
             {date}
           </p>
+
         </div>
+
       </div>
     </div>
   );

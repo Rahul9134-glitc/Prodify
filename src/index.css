@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* Dark Mode Enable */
+@custom-variant dark (&:where(.dark, .dark *));
 
 .fc {
   color: white;

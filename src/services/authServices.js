@@ -56,6 +56,7 @@ const changePassword = (
   newPassword,
   confirmPassword
 ) => {
+
   const users = getData("users");
   const currentUser = getData("currentUser");
 
@@ -66,10 +67,24 @@ const changePassword = (
     };
   }
 
+  if (newPassword.length < 8) {
+    return {
+      success: false,
+      message: "Password must be at least 8 characters",
+    };
+  }
+
   if (newPassword !== confirmPassword) {
     return {
       success: false,
       message: "Passwords do not match",
+    };
+  }
+
+  if (newPassword === currentPassword) {
+    return {
+      success: false,
+      message: "New password must be different from current password",
     };
   }
 
@@ -87,6 +102,8 @@ const changePassword = (
   };
 
   saveData("currentUser", updatedCurrentUser);
+
+  window.dispatchEvent(new Event("userUpdated"));
 
   return {
     success: true,

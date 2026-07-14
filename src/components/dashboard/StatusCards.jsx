@@ -8,28 +8,62 @@ const StatCard = ({
   growth,
 }) => {
   return (
-    <div className="rounded-2xl border border-slate-700 bg-[#1E293B] p-6 shadow-lg transition hover:shadow-blue-500/10 hover:border-blue-500">
+    <div
+      className="
+      group
+      rounded-3xl
+      border
+      border-slate-700
+      bg-white
+      p-6
+      shadow-lg
+      transition-all
+      duration-300
+      hover:-translate-y-1
+      hover:border-blue-500
+      hover:shadow-2xl
+      dark:bg-[#1E293B]
+    "
+    >
+      <div className="flex items-start justify-between">
 
-      <div className="flex items-center justify-between">
-
+        {/* Left */}
         <div>
-          <p className="text-sm font-medium text-gray-400">
+
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
             {title}
           </p>
 
-          <h2 className="mt-3 text-4xl font-bold text-white">
+          <h2 className="mt-4 text-4xl font-bold text-gray-900 dark:text-white">
             {value}
           </h2>
 
           {growth && (
-            <p className="mt-3 text-sm font-medium text-green-400">
+            <div className="mt-4 inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-600 dark:bg-green-500/20 dark:text-green-400">
               {growth}
-            </p>
+            </div>
           )}
+
         </div>
 
+        {/* Right Icon */}
+
         <div
-          className={`flex h-16 w-16 items-center justify-center rounded-2xl text-3xl text-white ${color}`}
+          className={`
+            flex
+            h-16
+            w-16
+            items-center
+            justify-center
+            rounded-2xl
+            text-3xl
+            text-white
+            shadow-lg
+            transition-all
+            duration-300
+            group-hover:scale-110
+            ${color}
+          `}
         >
           {icon}
         </div>
