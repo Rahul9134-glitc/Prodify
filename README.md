@@ -221,18 +221,11 @@ https://prodify-ivory.vercel.app/
 Example:
 
 ```
-Dashboard
 
-Tasks Page
-
-Analytics
-
-Calendar
-
-Dark Mode
-```
-
----
+<img width="1899" height="901" alt="2026-07-15" src="https://github.com/user-attachments/assets/10bd9d68-412a-4bb2-8a5f-5dfaa47a1287" />
+<img width="1920" height="917" alt="2026-07-15 (1)" src="https://github.com/user-attachments/assets/41eff3a0-bcb3-4cb4-9577-ea5776a4b954" />
+<img width="1920" height="911" alt="2026-07-15 (3)" src="https://github.com/user-attachments/assets/c2650d13-bea8-4a09-b161-9e688c6e1f3e" />
+<img width="1907" height="907" alt="2026-07-15 (2)" src="https://github.com/user-attachments/assets/2da71088-13a8-43d4-90b7-8f29531d6105" />
 
 ## 🎯 Learning Goals
 
